@@ -5,7 +5,7 @@ Vue.component('loading-spinner', {
     console.log('mounted');
     setTimeout(() => {
       this.visible = true;
-    }, 200);
+    }, 80);
   },
 });
 

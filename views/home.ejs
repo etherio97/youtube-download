@@ -147,7 +147,7 @@
           </div>
         </div>
       </section>
-      <loading-spinner v-if="loading"></loading-spinner>
+      <loading-spinner v-if="isLoading"></loading-spinner>
     </main>
     <template id="loading-spinner">
       <div class="loader-wrapper" :class="{'visible':visible}">
