@@ -1,5 +1,5 @@
-const download = require('.src/download');
 const app = require('./src/app');
+const download = require('./src/download');
 const YT1S = require('./src/YT1S');
 
 app.get('/', (req, res) => {
