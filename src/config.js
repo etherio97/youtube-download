@@ -6,7 +6,7 @@ const IS_DEV = !IS_PROD;
 
 const SERVER_PORT = process.env.PORT || '3000';
 
-const YT1S_URL = 'https://ytdl-get-video-info.vercel.app' || 'https://yt1s.com';
+const YT1S_URL = 'https://yt1s.com' || 'https://ytdl-get-video-info.vercel.app';
 
 const YT1S_INDEX = `${YT1S_URL}/api/ajaxSearch/index`;
 
