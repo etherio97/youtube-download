@@ -101,6 +101,16 @@
           </div>
         </div>
       </section>
+      <section v-if="results.length">
+        <h4>Search Results</h4>
+        <div class="search-results">
+          <div v-for="r in results" :id="r.v">
+            <a href="#" @click="selectVideo(r.v)">
+              {{ r.t }}
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
     <script src="/main.js"></script>
   </body>
