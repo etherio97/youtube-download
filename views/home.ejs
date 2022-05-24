@@ -57,6 +57,40 @@
         height: auto;
         margin: 2px auto;
       }
+    .loader-wrapper {
+      position: fixed;
+      inset: 0;
+      background: #000d;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+        align-items: center;
+        transition: opacity 500ms ease;
+        opacity: 0;
+      }
+  
+      .loader-wrapper.visible {
+        opacity: 1;
+      }
+  
+      .loader-wrapper .loader {
+        border: 10px solid #707070;
+        border-radius: 50%;
+        border-top: 10px solid #303030;
+        width: 64px;
+        height: 64px;
+        animation: spin 2s linear infinite;
+      }
+  
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+  
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
 
@@ -78,7 +112,7 @@
               required
             />
           </fieldset>
-          <button type="submit">Search</button>
+          <button type="submit" :disabled="isLoading">Convert</button>
         </form>
       </section>
       <section v-else style="text-align:center">
@@ -98,8 +132,8 @@
               </option>
             </select>
           </fieldset>
-          <button type="submit">Convert</button>
-          <button type="button" @click="restart()">Next Video</button>
+          <button type="submit" :disabled="isLoading">Download</button>
+          <button type="button" @click="restart()" :disabled="isLoading">Convert Next</button>
         </form>
       </section>
       <section v-if="results.length">
@@ -113,7 +147,13 @@
           </div>
         </div>
       </section>
+      <loading-spinner v-if="loading"></loading-spinner>
     </main>
+    <template id="loading-spinner">
+      <div class="loader-wrapper" :class="{'visible':visible}">
+        <div class="loader"></div>
+      </div>
+    </template>
     <script src="/main.js"></script>
   </body>
 </html>
