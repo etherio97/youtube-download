@@ -4,6 +4,7 @@ new Vue({
     title: undefined,
     channel: undefined,
     format: '',
+    results: [],
     formats: [],
     k: '',
     q: '',
@@ -18,20 +19,24 @@ new Vue({
       this.vid = undefined;
       this.title = undefined;
       this.channel = undefined;
-      this.formats = [];
+      this.formats = this.results = [];
       axios('/api/index', {
         params: { q: this.q },
       })
         .then(({ data }) => {
-          let formats = [];
-          let { vid, links, title, a } = data;
-          Object.values(links).forEach((data) =>
-            formats.push(...Object.values(data))
-          );
-          this.vid = vid;
-          this.title = title;
-          this.channel = a;
-          this.formats = formats;
+          if (data.p === 'search') {
+            this.results = data.items;
+          } else {
+            let formats = [];
+            let { vid, links, title, a } = data;
+            Object.values(links).forEach((data) =>
+              formats.push(...Object.values(data))
+            );
+            this.vid = vid;
+            this.title = title;
+            this.channel = a;
+            this.formats = formats;
+          }
         })
         .catch((e) => {
           console.error('Error', e);
@@ -60,7 +65,12 @@ new Vue({
       this.vid = undefined;
       this.title = undefined;
       this.channel = undefined;
+      this.results = [];
       this.formats = [];
+    },
+    selectVideo(id) {
+      this.q = id;
+      this.index();
     },
   },
   computed: {},

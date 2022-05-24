@@ -94,10 +94,7 @@ app.use((err, req, res, next) => {
  * Uncaught Exception Handler
  */
 process.on('uncaughtException', (err) => {
-  console.log('[CRITICAL_ERROR]', err);
-  setTimeout(() => console.log('[SYSTEM_SHUTDOWN]') | process.exit(1), 5000);
-});
-
-process.on('beforeExit', () => {
-  console.log('[INFO]', 'Bye Bye!');
+  console.log('[ERROR] Critical - ', err);
+  console.log('[INFO] Server will exit in next 5 seconds...');
+  setTimeout(() => console.log('[INFO] exit with error code 1') | process.exit(1), 5000);
 });

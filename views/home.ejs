@@ -42,6 +42,12 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2"></script>
+    <style>
+      .search-results {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+    </style>
   </head>
 
   <body>
@@ -52,13 +58,13 @@
       <section v-if="!vid">
         <form @submit.prevent="index">
           <fieldset>
-            <label for="q">Video ID*</label>
+            <label for="q">Youtube Video ID or URL*</label>
             <input
               type="search"
               v-model="q"
               id="q"
               name="q"
-              placeholder="Youtube Video ID"
+              placeholder="Youtube URL or ID"
               required
             />
           </fieldset>
@@ -84,6 +90,16 @@
           <button type="submit">Convert</button>
           <button type="button" @click="restart()">Next Video</button>
         </form>
+      </section>
+      <section v-if="results.length">
+        <h4>Search Results</h4>
+        <div class="search-results">
+          <div v-for="let r of results" :id="r.v">
+            <a href="javascript:void(0);" @click="selectVideo(r.v)">
+              {{ r.t }}
+            </a>
+          </div>
+        </div>
       </section>
     </main>
     <script src="/main.js"></script>
