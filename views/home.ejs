@@ -6,9 +6,36 @@
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
-    <title>YT1S Downloader</title>
+    <!-- For Primary (Google, etc)  -->
+    <meta name="title" content="Youtube Downloader | Ethereal" />
+    <meta
+      name="description"
+      content="Convert and download Youtube videos to MP3, MP4, 3GP for free with our Youtube Downloader. The downloading is very quick and simple, just wait a few seconds for the file to be ready on your device."
+    />
+    <meta name="image" content="/favicon_144x144.png" />
+
+    <!-- For Facebook (Open Graph) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Youtube Downloader | Ethereal" />
+    <meta
+      property="og:description"
+      content="Convert and download Youtube videos to MP3, MP4, 3GP for free with our Youtube Downloader. The downloading is very quick and simple, just wait a few seconds for the file to be ready on your device."
+    />
+    <meta property="og:image" content="/favicon_144x144.png" />
+    <meta property="og:url" content="/" />
+
+    <!-- For Twitter [Image Card] -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Youtube Downloader | Ethereal" />
+    <meta
+      property="twitter:description"
+      content="Convert and download Youtube videos to MP3, MP4, 3GP for free with our Youtube Downloader. The downloading is very quick and simple, just wait a few seconds for the file to be ready on your device."
+    />
+    <meta property="twitter:image" content="/favicon_144x144.png" />
+    <meta property="twitter:url" content="/" />
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" href="/favicon_144x144.png" sizes="144x144" />
+    <title>Youtube Downloader | Ethereal</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/milligram@1.4.1"
@@ -19,7 +46,9 @@
 
   <body>
     <main class="container">
-      <h2>YT1S <code>Downloader</code></h2>
+      <h2>Youtube Downloader</h2>
+      <h4>by <code>Ethereal Tech</code></h4>
+      <br />
       <section v-if="!vid">
         <form @submit.prevent="index">
           <fieldset>
