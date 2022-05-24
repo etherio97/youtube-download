@@ -58,12 +58,13 @@ app.get('/download', (req, res, next) => {
   download(url)
     .then(({ data, headers }) => {
       let disposition = headers['content-disposition'];
-      let filename = disposition.split('filename=')[1] || 'videoplayback.mp4';
+      let filename = decodeURIComponent(disposition.split('filename=')[1] || 'videoplayback.mp4');
       if (filename.substr(0, 1) === '"') {
         filename = filename.slice(1);
       }
-      if (filename.substr(-1, 1) === '"') {
-        filename = filename.slice(0, -1);
+      let l = filename.substr(-1, 1);
+      if ([';', '"'].includes(l)) {
+        filename = filename.slice(0, l === '"' ? -1 : -2);
       }
       filename = filename.replace('yt1s.com -', '').trim();
       res.setHeader('content-type', headers['content-type']);
