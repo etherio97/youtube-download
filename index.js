@@ -1,3 +1,4 @@
+const download = require('.src/download');
 const app = require('./src/app');
 const YT1S = require('./src/YT1S');
 
@@ -17,7 +18,7 @@ app.get('/api/index', async (req, res, next) => {
   try {
     const { data } = await YT1S.index(q);
     res.json(data);
-  } catch(e) {
+  } catch (e) {
     next({
       status: e.response && e.response.status,
       error: e.response && e.response.data,
@@ -38,13 +39,38 @@ app.get('/api/convert', async (req, res, next) => {
   try {
     const { data } = await YT1S.convert(vid, k);
     res.json(data);
-  } catch(e) {
+  } catch (e) {
     next({
       status: e.response && e.response.status,
       error: e.response && e.response.data,
       message: e.message,
     });
   }
+});
+
+app.get('/download', (req, res, next) => {
+  let { url } = req.query;
+  if (!url) {
+    return next({
+      status: 400,
+      error: 'Bad Request',
+      message: 'required query parameter: url',
+    });
+  }
+  download(url)
+    .then(({ data, headers }) => {
+      res.setHeader('content-type', headers['content-type']);
+      res.setHeader('content-disposition', headers['content-disposition']);
+      res.setHeader('content-length', data.length);
+      res.end(data);
+    })
+    .catch((e) => {
+      next({
+        status: e.response && e.response.status,
+        error: e.response && e.response.data,
+        message: e.message,
+      });
+    });
 });
 
 /**
