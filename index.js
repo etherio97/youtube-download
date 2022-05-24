@@ -57,8 +57,8 @@ app.get('/download', (req, res, next) => {
   }
   download(url)
     .then(({ data, headers }) => {
-      let disposition = headers['content-disposition'];
-      let filename = decodeURIComponent(disposition.split('filename=')[1] || 'videoplayback.mp4');
+      let disposition = decodeURIComponent(headers['content-disposition'] || '');
+      let filename = (disposition.split('filename=')[1] || 'videoplayback.mp4').split(';')[0];
       if (filename.substr(0, 1) === '"') {
         filename = filename.slice(1);
       }
@@ -68,7 +68,7 @@ app.get('/download', (req, res, next) => {
       }
       filename = filename.replace('yt1s.com -', '').trim();
       res.setHeader('content-type', headers['content-type']);
-      res.setHeader('content-disposition', `attachment; filename="${filename}"`);
+      res.setHeader('content-disposition', `attachment; filename="${encodeURIComponent(filename)}"; filename*=utf-8''${encodeURIComponent(filename)}`);
       res.setHeader('content-length', data.length);
       res.end(data);
     })
