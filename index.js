@@ -2,9 +2,7 @@ const app = require('./src/app');
 const download = require('./src/download');
 const YT1S = require('./src/YT1S');
 
-app.get('/', (req, res) => {
-  res.render('home');
-});
+app.get('/', (req, res) => res.render('home'));
 
 app.get('/api/index', async (req, res, next) => {
   let { q } = req.query;

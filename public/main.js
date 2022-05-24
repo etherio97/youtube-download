@@ -46,8 +46,8 @@ new Vue({
         params: { vid: this.vid, k: this.k },
       })
         .then(({ data }) => {
-          prompt('You video will be downloaded soon!', data.dlink);
-          location.href = data.dlink;
+          // prompt('You video will be downloaded soon!', data.dlink);
+          location.href = '/download?url=' + encodeURIComponent(data.dlink);
         })
         .catch((e) => {
           console.error('Error', e);
