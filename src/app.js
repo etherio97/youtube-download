@@ -11,8 +11,12 @@ if (IS_DEV) {
   console.log('env:production');
 }
 
+app.use(express.static(`${__dirname}/../public`));
+
 app.use(express.json());
 
-app.listen(SERVER_PORT, () => console.log('> server is running on port: %s', SERVER_PORT));
+app.listen(SERVER_PORT, () =>
+  console.log('> server is running on port: %s', SERVER_PORT)
+);
 
 module.exports = app;
