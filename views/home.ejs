@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>YT1S Downloader</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/milligram@1.4.1" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+   <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2"></script>
+</head>
+
+<body>
+  <main class="container">
+    <h2>YT1S <code>Downloader</code></h2>
+    <section v-if="!vid">
+      <form @submit.prevent="index">
+        <fieldset>
+          <label for="q">Video ID*</label>
+          <input type="search" v-model="q" id="q" name="q" placeholder="Youtube Video ID" required />
+        </fieldset>
+        <button type="submit">Convert</button>
+      </form>
+    </section>
+    <section v-else>
+      <h4>{{ title }}</h4>
+      <p>{{ channel }}</p>
+      <hr />
+      <form @submit.prevent="convert">
+        <fieldset>
+          <label for="k">Select format to download</label>
+          <select v-model="k" id="k" name="k">
+            <option disabled value="">
+              - select a format -
+            </option>
+            <option v-for="(f, i) in formats" :value="f.k" :id="i">
+              {{ f.f }} - {{ f.q }} ({{ f.size }})
+            </option>
+          </select>
+        </fieldset>
+        <button type="submit">Convert</button>
+        <button type="button" @click="restart()">Next Video</button>
+      </form>
+    </section>
+  </main>
+<script>
+  new Vue({
+    data: {
+      vid: undefined,
+      title: undefined,
+      channel: undefined,
+      format: '',
+      formats: [],
+      k: '',
+      q: 'QgDz1X9PyEo',
+    },
+    methods: {
+      index() {
+        if (!this.q) {
+          return alert('Video ID is required!');
+        }
+        this.k = '';
+        this.format = '';
+        this.vid = undefined;    
+        this.title = undefined;    
+        this.channel = undefined;
+        this.formats = [];
+        axios('/api/index', {
+          params: { q: this.q },
+        })
+          .then(({ data }) => {
+           let formats = [];
+           let { vid, links, title, a } = data;
+           Object.values(links)
+             .forEach((data) => formats.push(
+               ...Object.values(data)
+             ));
+           this.vid = vid;
+           this.title = title;
+           this.channel = a;
+           this.formats = formats;
+          })
+          .catch((e) => {
+            console.error('Error', e);
+            alert('Failed to convert video');
+          });
+      },
+      convert() {
+        if (!this.k) {
+          return alert('Select format to download!');
+        }
+        axios('/api/convert', {
+          params : { vid: this.vid, k: this.k },
+        })
+          .then(({ data }) => {
+            alert('You video will be downloaded soon!');
+            location.href = data.dlink;
+          })
+          .catch((e) => {
+            console.error('Error', e);
+            alert('Failed to convert video');
+          });
+      },
+      restart() {
+        this.k = '';
+        this.format = '';
+        this.vid = undefined;    
+        this.title = undefined;    
+        this.channel = undefined;
+        this.formats = [];
+      },
+    },
+    computed: {},
+  }).$mount('main');
+  </script>
+</body>
+
+</html>
