@@ -10,6 +10,9 @@ new Vue({
     q: '',
   },
   methods: {
+    getThumbnailUrl(vid) {
+      return `https://i.ytimg.com/vi/${vid}/0.jpg`;
+    },
     index() {
       if (!this.q) {
         return alert('Video ID is required!');

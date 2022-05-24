@@ -47,6 +47,16 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
       }
+      .search-results p {
+        font-size: 10px;
+        letter-spacing: 1px;
+        text-align: center;
+      }
+      .search-results img {
+        width: 100%;
+        height: auto;
+        margin: 2px auto;
+      }
     </style>
   </head>
 
@@ -71,7 +81,8 @@
           <button type="submit">Search</button>
         </form>
       </section>
-      <section v-else>
+      <section v-else style="text-align:center">
+        <img :src="getThumbnailUrl(vid)" style="width:240px;height:auto;margin:0 auto;" />
         <h4>{{ title }}</h4>
         <p>{{ channel }}</p>
         <hr />
@@ -96,7 +107,8 @@
         <div class="search-results">
           <div v-for="r in results" :id="r.v">
             <a href="#" @click="selectVideo(r.v)">
-              {{ r.t }}
+              <img :src="getThumbnailUrl(vid)" />
+              <p>{{ r.t }}</p>
             </a>
           </div>
         </div>
