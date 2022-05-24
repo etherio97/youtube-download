@@ -82,7 +82,7 @@
         </form>
       </section>
       <section v-else style="text-align:center">
-        <img :src="getThumbnailUrl(vid)" style="width:240px;height:auto;margin:0 auto;" />
+        <img :src="getThumbnailUrl(vid,'0')" style="width:240px;height:auto;margin:0 auto;" />
         <h4>{{ title }}</h4>
         <p>{{ channel }}</p>
         <hr />
@@ -107,7 +107,7 @@
         <div class="search-results">
           <div v-for="r in results" :id="r.v">
             <a href="#" @click="selectVideo(r.v)">
-              <img :src="getThumbnailUrl(vid)" />
+              <img :src="getThumbnailUrl(r.v,'1')" />
               <p>{{ r.t }}</p>
             </a>
           </div>

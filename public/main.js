@@ -10,8 +10,8 @@ new Vue({
     q: '',
   },
   methods: {
-    getThumbnailUrl(vid) {
-      return `https://i.ytimg.com/vi/${vid}/0.jpg`;
+    getThumbnailUrl(vid, size = '0') {
+      return `https://i.ytimg.com/vi/${vid}/${size}.jpg`;
     },
     index() {
       if (!this.q) {
