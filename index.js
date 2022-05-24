@@ -89,3 +89,15 @@ app.use((err, req, res, next) => {
     error,
   });
 });
+
+/**
+ * Uncaught Exception Handler
+ */
+process.on('uncaughtException', (err) => {
+  console.log('[CRITICAL_ERROR]', err);
+  setTimeout(() => console.log('[SYSTEM_SHUTDOWN]') | process.exit(1), 5000);
+});
+
+process.on('beforeExit', () => {
+  console.log('[INFO]', 'Bye Bye!');
+});
