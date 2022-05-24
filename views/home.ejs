@@ -46,24 +46,28 @@
       .search-results {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+        gap: 2px;
       }
+      
       .search-results p {
         font-size: 10px;
         letter-spacing: 1px;
         text-align: center;
       }
+      
       .search-results img {
         width: 100%;
         height: auto;
         margin: 2px auto;
       }
-    .loader-wrapper {
-      position: fixed;
-      inset: 0;
-      background: #000d;
-      z-index: 100;
-      display: flex;
-      justify-content: center;
+      
+      .loader-wrapper {
+        position: fixed;
+        inset: 0;
+        background: #000d;
+        z-index: 100;
+        display: flex;
+        justify-content: center;
         align-items: center;
         transition: opacity 500ms ease;
         opacity: 0;
