@@ -135,6 +135,9 @@
                 {{ f.f }} - {{ f.q }} ({{ f.size }})
               </option>
             </select>
+            <p style="font-family:monospace;font-size:10px;letter-spacing:1px;font-weight:700;color:#EED202;">
+              * max download limit: 400MB
+            </p>
           </fieldset>
           <button type="submit" :disabled="isLoading">Download</button>
           <button type="button" @click="restart()" :disabled="isLoading">Convert Next</button>
@@ -145,7 +148,7 @@
         <div class="search-results">
           <div v-for="r in results" :id="r.v">
             <a href="#" @click="selectVideo(r.v)">
-              <img :src="getThumbnailUrl(r.v,'1')" />
+              <img :src="getThumbnailUrl(r.v,'0')" />
               <p>{{ r.t }}</p>
             </a>
           </div>
