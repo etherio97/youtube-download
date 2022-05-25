@@ -15,6 +15,7 @@ app.get('/api/index', async (req, res, next) => {
   }
   try {
     const { data } = await YT1S.index(q);
+    res.setHeader('cache-control', 'public,max-age=86400,s-max-age=86400');
     res.json(data);
   } catch (err) {
     next({
@@ -36,6 +37,7 @@ app.get('/api/convert', async (req, res, next) => {
   }
   try {
     const { data } = await YT1S.convert(vid, k);
+    res.setHeader('cache-control', 'public,max-age=86400,s-max-age=86400');
     res.json(data);
   } catch (err) {
     next({

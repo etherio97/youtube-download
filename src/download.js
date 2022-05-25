@@ -1,7 +1,7 @@
 const { default: axios } = require('axios');
 const { MAX_SIZE } = require('./config');
 
-const CONTENT_TYPES = ['video/mp4', 'audio/mpeg'];
+const CONTENT_TYPES = ['video/3gpp', 'video/mp4', 'audio/mpeg'];
 
 function preflight(url) {
   return axios.head(url).then(({ headers }) => {
