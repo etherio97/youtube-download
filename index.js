@@ -16,11 +16,11 @@ app.get('/api/index', async (req, res, next) => {
   try {
     const { data } = await YT1S.index(q);
     res.json(data);
-  } catch (e) {
+  } catch (err) {
     next({
-      status: e.response && e.response.status,
-      error: e.response && e.response.data,
-      message: e.message,
+      status: err.response && err.response.status,
+      error: err.response && err.response.data,
+      message: err.message,
     });
   }
 });
@@ -37,11 +37,11 @@ app.get('/api/convert', async (req, res, next) => {
   try {
     const { data } = await YT1S.convert(vid, k);
     res.json(data);
-  } catch (e) {
+  } catch (err) {
     next({
-      status: e.response && e.response.status,
-      error: e.response && e.response.data,
-      message: e.message,
+      status: err.response && err.response.status,
+      error: err.response && err.response.data,
+      message: err.message,
     });
   }
 });
@@ -73,12 +73,18 @@ app.get('/download', (req, res, next) => {
       res.setHeader('content-length', data.length);
       res.end(data);
     })
-    .catch((e) => {
-      next({
-        status: e.response && e.response.status,
-        error: e.response && e.response.data,
-        message: e.message,
-      });
+    .catch((err) => {
+      if ('response' in err) {
+        next({
+          status: err.response && err.response.status,
+          error: err.response && err.response.data,
+          message: err.message,
+        });
+      } else {
+        let message = err.message || 'Something went wrong';
+        res.redirect('/?error=' + encodeURIComponent(message));
+        res.end();
+      }
     });
 });
 

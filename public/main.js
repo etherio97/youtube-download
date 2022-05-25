@@ -93,5 +93,12 @@ new Vue({
       this.index();
     },
   },
-  computed: {},
+  beforeMount() {
+    let params = new URLSearchParams(location.search);
+    if (params.has('error')) {
+      let error = params.get('error');
+      history.pushState({}, '', location.pathname);
+      alert(error);
+    }
+  },
 }).$mount('main');

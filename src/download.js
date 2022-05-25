@@ -11,17 +11,11 @@ function preflight(url) {
     let bytes = headers['content-length'];
     let type = headers['content-type'];
     if (!(type && CONTENT_TYPES.includes(type))) {
-      throw { response: {
-        status: 415,
-        data: 'Invalid content type: ' + type,
-      } };
+      throw new Error('Invalid content type: ' + type);
     }
     if (bytes > MAX_SIZE) {
       let size = bytes / 1000 / 1024;
-      throw { response: {
-        status: 413,
-        data: 'Exceeded download limit size: ' + size + ' MB',
-      } };
+      throw new Error('Exceeded download limit size: ' + size + ' MB');
     }
   });
 }
