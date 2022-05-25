@@ -31,14 +31,12 @@ new Vue({
       if (!this.q) {
         return alert('Video ID is required!');
       }
-      if (this.q.length !== '11') {
-        let url;
-        try {
-          url = new URL(this.q);
-        } catch (e) {}
-        if (!(url instanceof URL) && url.length !== 11) {
-          return this.search();
-        }
+      let url;
+      try {
+        url = new URL(this.q);
+      } catch (e) {}
+      if (!(url instanceof URL) && this.q.length !== 11) {
+        return this.search();
       }
       this.k = '';
       this.format = '';
