@@ -16,7 +16,7 @@ app.get('/api/index', async (req, res, next) => {
   }
   try {
     const { data } = await YT1S.index(q);
-    res.setHeader('cache-control', 'public,max-age=86400,s-max-age=86400');
+    res.setHeader('cache-control', 'public, max-age=86400, s-max-age=86400');
     res.json(data);
   } catch (err) {
     next({
@@ -38,7 +38,7 @@ app.get('/api/convert', async (req, res, next) => {
   }
   try {
     const { data } = await YT1S.convert(vid, k);
-    res.setHeader('cache-control', 'public,max-age=21600,s-max-age=21600');
+    res.setHeader('cache-control', 'no-store');
     res.json(data);
   } catch (err) {
     next({
@@ -74,7 +74,7 @@ app.get('/download', (req, res, next) => {
         filename = filename.slice(0, l === '"' ? -1 : -2);
       }
       filename = filename.replace('yt1s.com -', '').trim();
-      res.setHeader('cache-control', 'public,max-age=86400,s-max-age=86400');
+      res.setHeader('cache-control', 'public, max-age=86400, s-max-age=86400');
       res.setHeader('content-type', headers['content-type']);
       res.setHeader(
         'content-disposition',

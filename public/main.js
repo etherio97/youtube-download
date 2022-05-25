@@ -114,15 +114,22 @@ new Vue({
       let formats = this.formats
         .filter((f) => f.f === 'mp4')
         .sort((a, b) => (parseInt(b.q) || 0) - (parseInt(a.q) || 0));
-      let format = formats[0];
+      let format = formats.find((f) => f.q === '360p') 
+        || formats.find((f) => f.q === '240p')
+        || formats.find((f) => f.q === '144p')
+        || formats[0];
+      this.isLoading = true;
       axios('/api/convert', {
         params: { vid: this.vid, k: format.k },
       })
         .then(({ data }) => {
+          this.isLoading = false;
           this.videoUrl = '/download?url=' + encodeURIComponent(data.dlink);
         })
         .catch((e) => {
-          //
+          this.isLoading = false;
+          console.error('ERROR',e);
+          alert('Unable to play video');
         });
     },
     unmuteVideo() {
