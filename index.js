@@ -57,8 +57,12 @@ app.get('/download', (req, res, next) => {
   }
   download(url)
     .then(({ data, headers }) => {
-      let disposition = decodeURIComponent(headers['content-disposition'] || '');
-      let filename = (disposition.split('filename=')[1] || 'videoplayback.mp4').split(';')[0];
+      let disposition = decodeURIComponent(
+        headers['content-disposition'] || ''
+      );
+      let filename = (
+        disposition.split('filename=')[1] || 'videoplayback.mp4'
+      ).split(';')[0];
       if (filename.substr(0, 1) === '"') {
         filename = filename.slice(1);
       }
@@ -69,7 +73,12 @@ app.get('/download', (req, res, next) => {
       filename = filename.replace('yt1s.com -', '').trim();
       res.setHeader('cache-control', 'public,max-age=86400,s-max-age=86400');
       res.setHeader('content-type', headers['content-type']);
-      res.setHeader('content-disposition', `attachment; filename="${encodeURIComponent(filename)}"; filename*=utf-8''${encodeURIComponent(filename)}`);
+      res.setHeader(
+        'content-disposition',
+        `attachment; filename="${encodeURIComponent(
+          filename
+        )}"; filename*=utf-8''${encodeURIComponent(filename)}`
+      );
       res.setHeader('content-length', data.length);
       res.end(data);
     })
@@ -100,6 +109,8 @@ app.use((err, req, res, next) => {
   let status = err.status || 500;
   let message = err.message || 'Something went wrong!';
   let error = err.error || 'Internal Server Error';
+  console.error('[ERROR]', err.error);
+  console.error('[ERROR]', err.message);
   res.status(status).json({
     status,
     message,
@@ -113,5 +124,8 @@ app.use((err, req, res, next) => {
 process.on('uncaughtException', (err) => {
   console.log('[ERROR] Critical - ', err);
   console.log('[INFO] Server will exit in next 5 seconds...');
-  setTimeout(() => console.log('[INFO] exit with error code 1') | process.exit(1), 5000);
+  setTimeout(
+    () => console.log('[INFO] exit with error code 1') | process.exit(1),
+    5000
+  );
 });
