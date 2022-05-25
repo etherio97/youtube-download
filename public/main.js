@@ -12,6 +12,7 @@ new Vue({
   data: {
     isLoading: false,
     vid: undefined,
+    videoUrl: undefined,
     title: undefined,
     channel: undefined,
     format: '',
@@ -129,6 +130,7 @@ new Vue({
       if (!(videoEl instanceof HTMLVideoElement)) return;
       videoEl.volume = 1;
       videoEl.removeAttribute('muted');
+      ``;
       videoEl.style.cursor = 'auto ';
     },
   },
