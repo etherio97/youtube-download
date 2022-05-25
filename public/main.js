@@ -17,9 +17,11 @@ new Vue({
     channel: undefined,
     format: '',
     results: [],
+    searchResults: [],
     formats: [],
     k: '',
     q: '',
+    s: '',
   },
   methods: {
     getThumbnailUrl(vid, size = '0') {
@@ -28,6 +30,15 @@ new Vue({
     index() {
       if (!this.q) {
         return alert('Video ID is required!');
+      }
+      if (this.q.length !== '11') {
+        let url;
+        try {
+          url = new URL(this.q);
+        } catch (e) {}
+        if (!(url instanceof URL) && url.length !== 11) {
+          return this.search();
+        }
       }
       this.k = '';
       this.format = '';
@@ -56,6 +67,7 @@ new Vue({
           }
         })
         .catch((e) => {
+          console.error('Error', e);
           this.isLoading = false;
           alert('Failed to convert video');
         });
@@ -77,6 +89,22 @@ new Vue({
         .catch((e) => {
           console.error('Error', e);
           this.isLoading = false;
+          alert('Failed to download video');
+        });
+    },
+    search() {
+      let q = this.q || '';
+      this.results = [];
+      this.isLoading = true;
+      axios('/api/search', { params: { q } })
+        .then(({ data }) => {
+          this.isLoading = false;
+          this.results = data;
+        })
+        .catch((e) => {
+          console.error('Error', e);
+          this.isLoading = false;
+          alert('Unable to search videos');
         });
     },
     restart() {

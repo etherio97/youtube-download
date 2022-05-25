@@ -45,19 +45,19 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 2px;
       }
-      
+
       .search-results p {
         font-size: 10px;
         letter-spacing: 1px;
         text-align: center;
       }
-      
+
       .search-results img {
         width: 100%;
         height: auto;
         margin: 2px auto;
       }
-      
+
       .loader-wrapper {
         position: fixed;
         inset: 0;
@@ -69,11 +69,11 @@
         transition: opacity 500ms ease;
         opacity: 0;
       }
-  
+
       .loader-wrapper.visible {
         opacity: 1;
       }
-  
+
       .loader-wrapper .loader {
         border: 10px solid #707070;
         border-radius: 50%;
@@ -82,12 +82,12 @@
         height: 64px;
         animation: spin 2s linear infinite;
       }
-  
+
       @keyframes spin {
         0% {
           transform: rotate(0deg);
         }
-  
+
         100% {
           transform: rotate(360deg);
         }
@@ -103,21 +103,23 @@
       <section v-if="!vid">
         <form @submit.prevent="index">
           <fieldset>
-            <label for="q">Youtube Video ID or URL*</label>
             <input
               type="search"
               v-model="q"
               id="q"
               name="q"
-              placeholder="Youtube URL or ID"
+              placeholder="Search or Youtube URL or ID"
               required
             />
           </fieldset>
           <button type="submit" :disabled="isLoading">Convert</button>
         </form>
       </section>
-      <section v-else style="text-align:center">
-        <img :src="getThumbnailUrl(vid,'0')" style="width:240px;height:auto;margin:0 auto;" />
+      <section v-else style="text-align: center;">
+        <img
+          :src="getThumbnailUrl(vid,'0')"
+          style="width: 240px; height: auto; margin: 0 auto;"
+        />
         <h4>{{ title }}</h4>
         <p>{{ channel }}</p>
         <hr />
@@ -132,22 +134,57 @@
                 {{ f.f }} - {{ f.q }} ({{ f.size }})
               </option>
             </select>
-            <p style="font-family:monospace;font-size:10px;letter-spacing:1px;font-weight:700;color:#958300;">
+            <p
+              style="
+                font-family: monospace;
+                font-size: 10px;
+                letter-spacing: 1px;
+                font-weight: 700;
+                color: #958300;
+              "
+            >
               * max download limit: 400MB
             </p>
           </fieldset>
           <button type="submit" :disabled="isLoading">Download</button>
-          <button type="button" @click="restart()" :disabled="isLoading">Convert Next</button>
+          <button type="button" @click="restart()" :disabled="isLoading">
+            Convert Next
+          </button>
         </form>
       </section>
       <section v-if="results.length">
         <h4>Search Results</h4>
         <div class="search-results">
           <div v-for="r in results" :id="r.v">
-            <a href="#" @click="selectVideo(r.v)">
-              <img :src="getThumbnailUrl(r.v,'0')" />
-              <p>{{ r.t }}</p>
-            </a>
+            <template v-if="['live','video'].includes(r.type)">
+              <a href="#" @click="selectVideo(r.id)">
+                <img :src="getThumbnailUrl(r.id,'0')" />
+                <p>
+                  {{ r.title }} <code>{{ r.timestamp }}</code>
+                </p>
+                <p style="font-size: 8px;">
+                  <a
+                    :href="r.author.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {{ r.author.name }}
+                  </a>
+                </p>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  "
+                >
+                  <p style="font-size: 8px;">{{ r.ago }}</p>
+                  <p style="font-size: 8px;">
+                    {{ r.views.toLocaleString() }} Views
+                  </p>
+                </div>
+              </a>
+            </template>
           </div>
         </div>
       </section>
