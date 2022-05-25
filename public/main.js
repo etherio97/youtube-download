@@ -2,7 +2,6 @@ Vue.component('loading-spinner', {
   template: document.getElementById('loading-spinner').innerHTML,
   data: () => ({ visible: false }),
   mounted() {
-    console.log('mounted');
     setTimeout(() => {
       this.visible = true;
     }, 80);
@@ -21,7 +20,6 @@ new Vue({
     formats: [],
     k: '',
     q: '',
-    s: '',
   },
   methods: {
     getThumbnailUrl(vid, size = '0') {
@@ -31,14 +29,8 @@ new Vue({
       if (!this.q) {
         return alert('Video ID is required!');
       }
-      if (this.q.length !== '11') {
-        let url;
-        try {
-          url = new URL(this.q);
-        } catch (e) {}
-        if (!(url instanceof URL) && url.length !== 11) {
-          return this.search();
-        }
+      if (!this.isIndex) {
+        return this.search();
       }
       this.k = '';
       this.format = '';
@@ -128,5 +120,16 @@ new Vue({
       history.pushState({}, '', location.pathname);
       alert(error);
     }
+  },
+  computed: {
+    isIndex() {
+      if (!this.q) return true;
+      try {
+        new URL(this.q);
+        return true;
+      } catch (e) {
+        return !this.q.includes(' ') && this.q.length === 11;
+      }
+    },
   },
 }).$mount('main');

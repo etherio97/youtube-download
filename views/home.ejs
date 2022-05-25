@@ -43,13 +43,14 @@
       .search-results {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 2px;
+        gap: 4px;
       }
 
       .search-results p {
         font-size: 10px;
         letter-spacing: 1px;
         text-align: center;
+        padding: 0;
       }
 
       .search-results img {
@@ -112,7 +113,11 @@
               required
             />
           </fieldset>
-          <button type="submit" :disabled="isLoading">Convert</button>
+          <button
+            type="submit"
+            :disabled="isLoading"
+            v-text="isIndex ? 'Convert' : 'Search'"
+          ></button>
         </form>
       </section>
       <section v-else style="text-align: center;">
@@ -155,34 +160,30 @@
       <section v-if="results.length">
         <h4>Search Results</h4>
         <div class="search-results">
-          <div v-for="r in results" :id="r.v">
-            <a href="#" @click="selectVideo(r.id)">
-              <img :src="getThumbnailUrl(r.id,'0')" />
-              <p>
+          <div v-for="r in results" :id="r.videoId">
+            <a href="javascript:void(0)" @click="selectVideo(r.videoId)">
+              <img :src="getThumbnailUrl(r.videoId,'0')" />
+              <div>
                 {{ r.title }} <code>{{ r.timestamp }}</code>
-              </p>
-              <p style="font-size: 8px;">
-                <a
-                  :href="r.author.url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {{ r.author.name }}
-                </a>
-              </p>
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                "
-              >
-                <p style="font-size: 8px;">{{ r.ago }}</p>
-                <p style="font-size: 8px;">
-                  {{ r.views.toLocaleString() }} Views
-                </p>
               </div>
             </a>
+            <div style="font-size: 8px;">
+              <a :href="r.author.url" target="_blank" rel="noopener noreferrer">
+                {{ r.author.name }}
+              </a>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <span style="font-size: 8px;">{{ r.ago }}</span>
+              <span style="font-size: 8px;">
+                {{ r.views.toLocaleString() }} Views
+              </span>
+            </div>
           </div>
         </div>
       </section>
