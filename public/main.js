@@ -128,10 +128,11 @@ new Vue({
     unmuteVideo() {
       let videoEl = this.$refs.videoEl;
       if (!(videoEl instanceof HTMLVideoElement)) return;
-      videoEl.volume = 1;
-      videoEl.removeAttribute('muted');
-      ``;
-      videoEl.style.cursor = 'auto ';
+      if (videoEl.muted) {
+        videoEl.volume = 1;
+        videoEl.removeAttribute('muted');
+        videoEl.style.cursor = 'auto';
+      }
     },
   },
   beforeMount() {
