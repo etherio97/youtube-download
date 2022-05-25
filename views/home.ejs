@@ -113,7 +113,7 @@
               required
             />
           </fieldset>
-          <button type="submit" :disabled="isLoading">Convert</button>
+          <button type="submit" :disabled="isLoading" v-text="isIndex ? 'Convert' : 'Search'"></button>
         </form>
       </section>
       <section v-else style="text-align: center;">
