@@ -1,6 +1,7 @@
 const app = require('./src/app');
 const download = require('./src/download');
 const YT1S = require('./src/YT1S');
+const YTSearch = require('./src/YTSearch');
 
 app.get('/', (req, res) => res.render('home'));
 
@@ -97,6 +98,106 @@ app.get('/download', (req, res, next) => {
         res.end();
       }
     });
+});
+
+app.get('/api/search', (req, res, next) => {
+  let { q } = req.query;
+  if (!q) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Bad Request',
+      message: 'Required query parameter: q',
+    });
+  }
+  YTSearch.search(q)
+    .then((data) => res.json(data))
+    .catch((err) =>
+      next({
+        status: 500,
+        error: 'Internal Server Error',
+        message: err.message,
+      })
+    );
+});
+
+app.get('/api/search/videos', (req, res, next) => {
+  let { q } = req.query;
+  if (!q) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Bad Request',
+      message: 'Required query parameter: q',
+    });
+  }
+  YTSearch.videos(q)
+    .then((data) => res.json(data))
+    .catch((err) =>
+      next({
+        status: 500,
+        error: 'Internal Server Error',
+        message: err.message,
+      })
+    );
+});
+
+app.get('/api/search/live', (req, res, next) => {
+  let { q } = req.query;
+  if (!q) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Bad Request',
+      message: 'Required query parameter: q',
+    });
+  }
+  YTSearch.live(q)
+    .then((data) => res.json(data))
+    .catch((err) =>
+      next({
+        status: 500,
+        error: 'Internal Server Error',
+        message: err.message,
+      })
+    );
+});
+
+app.get('/api/search/playlists', (req, res, next) => {
+  let { q } = req.query;
+  if (!q) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Bad Request',
+      message: 'Required query parameter: q',
+    });
+  }
+  YTSearch.playlists(q)
+    .then((data) => res.json(data))
+    .catch((err) =>
+      next({
+        status: 500,
+        error: 'Internal Server Error',
+        message: err.message,
+      })
+    );
+});
+
+app.get('/api/search/channels', (req, res, next) => {
+  let { q } = req.query;
+  if (!q) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Bad Request',
+      message: 'Required query parameter: q',
+    });
+  }
+  YTSearch.channels(q)
+    .then((data) => res.json(data))
+    .catch((err) =>
+      next({
+        status: 500,
+        error: 'Internal Server Error',
+        message: err.message,
+      })
+    );
 });
 
 /**
