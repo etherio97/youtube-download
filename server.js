@@ -38,7 +38,7 @@ app.get('/api/convert', async (req, res, next) => {
   }
   try {
     const { data } = await YT1S.convert(vid, k);
-    res.setHeader('cache-control', 'public,max-age=86400,s-max-age=86400');
+    res.setHeader('cache-control', 'public,max-age=21600,s-max-age=21600');
     res.json(data);
   } catch (err) {
     next({
