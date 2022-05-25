@@ -15,7 +15,7 @@ function preflight(url) {
     }
     if (bytes > MAX_SIZE) {
       let size = bytes / 1000 / 1024;
-      throw new Error('Exceeded download limit size: ' + size + ' MB');
+      throw new Error('Exceeded download limit size: ' + size.toFixed(2) + ' MB');
     }
   });
 }
