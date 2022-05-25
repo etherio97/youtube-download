@@ -32,12 +32,7 @@ new Vue({
       if (!this.isIndex) {
         return this.search();
       }
-      this.k = '';
-      this.format = '';
-      this.vid = undefined;
-      this.title = undefined;
-      this.channel = undefined;
-      this.formats = this.results = [];
+      this.restart();
       this.isLoading = true;
       axios('/api/index', {
         params: { q: this.q },
@@ -102,6 +97,7 @@ new Vue({
     restart() {
       this.k = '';
       this.format = '';
+      this.videoUrl = '';
       this.vid = undefined;
       this.title = undefined;
       this.channel = undefined;
@@ -111,6 +107,29 @@ new Vue({
     selectVideo(id) {
       this.q = id;
       this.index();
+    },
+    watchVideo() {
+      if (!this.formats.length) return;
+      let formats = this.formats
+        .filter((f) => f.f === 'mp4')
+        .sort((a, b) => (parseInt(b.q) || 0) - (parseInt(a.q) || 0));
+      let format = formats[0];
+      axios('/api/convert', {
+        params: { vid: this.vid, k: format.k },
+      })
+        .then(({ data }) => {
+          this.videoUrl = '/download?url=' + encodeURIComponent(data.dlink);
+        })
+        .catch((e) => {
+          //
+        });
+    },
+    unmuteVideo() {
+      let videoEl = this.$refs.videoEl;
+      if (!(videoEl instanceof HTMLVideoElement)) return;
+      videoEl.volume = 1;
+      videoEl.removeAttribute('muted');
+      videoEl.style.cursor = 'auto ';
     },
   },
   beforeMount() {

@@ -121,10 +121,28 @@
         </form>
       </section>
       <section v-else style="text-align: center;">
+        <video
+          v-if="videoUrl"
+          :poster="getThumbnailUrl(vid,'0')"
+          preload="none"
+          controls
+          ref="videoEl"
+          @click="unmuteVideo()"
+          style="width: 240px; height: auto; margin: 0 auto; cursor: pointer;"
+          playsinline
+          autoplay
+          muted
+        >
+          <source type="video/mp4" :src="videoUrl" />
+        </video>
         <img
+          v-else
           :src="getThumbnailUrl(vid,'0')"
-          style="width: 240px; height: auto; margin: 0 auto;"
+          style="width: 240px; height: auto; margin: 0 auto; cursor: pointer;"
+          @click="watchVideo()"
+          title="Click to watch video"
         />
+
         <h4>{{ title }}</h4>
         <p>{{ channel }}</p>
         <hr />
