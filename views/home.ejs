@@ -156,35 +156,33 @@
         <h4>Search Results</h4>
         <div class="search-results">
           <div v-for="r in results" :id="r.v">
-            <template v-if="['live','video'].includes(r.type)">
-              <a href="#" @click="selectVideo(r.id)">
-                <img :src="getThumbnailUrl(r.id,'0')" />
-                <p>
-                  {{ r.title }} <code>{{ r.timestamp }}</code>
-                </p>
-                <p style="font-size: 8px;">
-                  <a
-                    :href="r.author.url"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {{ r.author.name }}
-                  </a>
-                </p>
-                <div
-                  style="
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                  "
+            <a href="#" @click="selectVideo(r.id)">
+              <img :src="getThumbnailUrl(r.id,'0')" />
+              <p>
+                {{ r.title }} <code>{{ r.timestamp }}</code>
+              </p>
+              <p style="font-size: 8px;">
+                <a
+                  :href="r.author.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <p style="font-size: 8px;">{{ r.ago }}</p>
-                  <p style="font-size: 8px;">
-                    {{ r.views.toLocaleString() }} Views
-                  </p>
-                </div>
-              </a>
-            </template>
+                  {{ r.author.name }}
+                </a>
+              </p>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <p style="font-size: 8px;">{{ r.ago }}</p>
+                <p style="font-size: 8px;">
+                  {{ r.views.toLocaleString() }} Views
+                </p>
+              </div>
+            </a>
           </div>
         </div>
       </section>

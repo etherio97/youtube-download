@@ -96,7 +96,7 @@ new Vue({
       let q = this.q || '';
       this.results = [];
       this.isLoading = true;
-      axios('/api/search', { params: { q } })
+      axios('/api/search/videos', { params: { q } })
         .then(({ data }) => {
           this.isLoading = false;
           this.results = data;
