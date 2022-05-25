@@ -67,6 +67,7 @@ app.get('/download', (req, res, next) => {
         filename = filename.slice(0, l === '"' ? -1 : -2);
       }
       filename = filename.replace('yt1s.com -', '').trim();
+      res.setHeader('cache-control', 'public,max-age=86400,s-max-age=86400');
       res.setHeader('content-type', headers['content-type']);
       res.setHeader('content-disposition', `attachment; filename="${encodeURIComponent(filename)}"; filename*=utf-8''${encodeURIComponent(filename)}`);
       res.setHeader('content-length', data.length);
