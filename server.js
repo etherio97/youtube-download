@@ -110,7 +110,10 @@ app.get('/api/search', (req, res, next) => {
     });
   }
   YTSearch.search(q)
-    .then((data) => res.json(data))
+    .then((data) => {
+      res.setHeader('cache-control', 'public, max-age=86400, s-max-age=86400');
+      res.json(data);
+    })
     .catch((err) =>
       next({
         status: 500,
@@ -130,7 +133,10 @@ app.get('/api/search/videos', (req, res, next) => {
     });
   }
   YTSearch.videos(q)
-    .then((data) => res.json(data))
+    .then((data) => {
+      res.setHeader('cache-control', 'public, max-age=86400, s-max-age=86400');
+      res.json(data);
+    })
     .catch((err) =>
       next({
         status: 500,
@@ -150,7 +156,10 @@ app.get('/api/search/live', (req, res, next) => {
     });
   }
   YTSearch.live(q)
-    .then((data) => res.json(data))
+    .then((data) => {
+      res.setHeader('cache-control', 'public, max-age=86400, s-max-age=86400');
+      res.json(data);
+    })
     .catch((err) =>
       next({
         status: 500,
@@ -170,7 +179,10 @@ app.get('/api/search/playlists', (req, res, next) => {
     });
   }
   YTSearch.playlists(q)
-    .then((data) => res.json(data))
+    .then((data) => {
+      res.setHeader('cache-control', 'public, max-age=86400, s-max-age=86400');
+      res.json(data);
+    })
     .catch((err) =>
       next({
         status: 500,
@@ -190,7 +202,10 @@ app.get('/api/search/channels', (req, res, next) => {
     });
   }
   YTSearch.channels(q)
-    .then((data) => res.json(data))
+    .then((data) => {
+      res.setHeader('cache-control', 'public, max-age=86400, s-max-age=86400');
+      res.json(data);
+    })
     .catch((err) =>
       next({
         status: 500,
