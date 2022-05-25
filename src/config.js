@@ -15,6 +15,8 @@ const YT1S_CONVERT = `${YT1S_URL}/api/ajaxConvert/convert`;
 const USER_AGENT =
   'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0 Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0';
 
+const MAX_SIZE = 400 * 1000 * 1024; // MB * KB * Bytes = 400MB
+
 module.exports = {
   APP_ENV,
   IS_PROD,
@@ -24,4 +26,5 @@ module.exports = {
   YT1S_INDEX,
   YT1S_CONVERT,
   USER_AGENT,
+  MAX_SIZE,
 };
